@@ -1,0 +1,28 @@
+{
+  "name": "theme-converter",
+  "version": "1.0.0",
+  "description": "Converts Sabaki v0.3x themes into v0.4x themes.",
+  "bin": "main.js",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main",
+    "build": "pkg . --targets node8 --out-path ./bin",
+    "build:all": "pkg . --targets node8-windows-x64,node8-linux-x64,node8-macos-x64 --out-path ./bin"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SabakiHQ/theme-converter.git"
+  },
+  "author": "Yichuan Shen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SabakiHQ/theme-converter/issues"
+  },
+  "homepage": "https://github.com/SabakiHQ/theme-converter#readme",
+  "dependencies": {
+    "recursive-readdir": "^2.2.2"
+  },
+  "devDependencies": {
+    "pkg": "^4.3.4"
+  }
+}
