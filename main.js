@@ -15,7 +15,7 @@ async function main() {
 
             let css = await promisify(fs.readFile)(file, 'utf8')
 
-            let newCss = css
+            let newCSS = css
                 .replace(
                     /\.goban\s+(\.row\s+)?li(\.random_(\d+))?\.sign_(-1|0|1)(\.random_(\d+))?\s+\.stone\s+img/g,
                     (_0, _1, _2, random1, sign, _3, random2) => {
@@ -41,6 +41,8 @@ async function main() {
                     }
                 )
                 .replace(/\.goban/g, '.shudan-goban')
+
+            await promisify(fs.writeFile)(file, newCSS)
 
             console.log(`Done processing ${path.relative(folderPath, file)}.`)
         })())
