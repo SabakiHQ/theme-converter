@@ -1,6 +1,6 @@
 # theme-converter
 
-Converts Sabaki v0.3x themes into v0.4x themes.
+Converts Sabaki v0.3x theme styles into v0.4x theme styles.
 
 ## How to use
 
