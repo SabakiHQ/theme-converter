@@ -27,7 +27,7 @@ async function main() {
             .replace(
                 /(([^,{]+,\s*)*)\.goban((\s*,[^,{]+)*)\s*{([^{}])}/g,
                 (_0, _1, _2, _3, _4, body) => {
-                    let urlRegex = /background-image:\s+(url\([^)]*\))/
+                    let urlRegex = /background(-image)?:[^;]*(url\([^)]*\))/
                     let boardBackgroundImage = (body.match(urlRegex) || [])[1]
                     let colorRegex = /(#[0-9a-f]{6}|rgba?\((\s*[\d\.]+\s*,?){3,4}\))/i
                     let boardBackgroundColor = (body.match(colorRegex) || [])[0]
@@ -43,7 +43,9 @@ async function main() {
                             '.shudan-goban-image {',
                             `  background-image: ${boardBackgroundImage}`,
                             '}'
-                        ].join('\n')
+                        ].join('\n'),
+                        '',
+                        `.DEPRECATED-goban {${body}}`,
                     ].join('\n')
                 }
             )
