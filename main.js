@@ -25,23 +25,26 @@ async function main() {
                 }
             )
             .replace(
-                /(([^,{]+,\s*)*)\.goban((\s*,[^,{]+)*)\s*{([^{}])}/g,
-                (_0, _1, _2, _3, _4, body) => {
+                /([^\s}][^}]*,\s*)?\.goban\s*(,[^{]*)?{([^{}]*)}/g,
+                (_0, _1, _2, body) => {
                     let urlRegex = /background(-image)?:[^;]*(url\([^)]*\))/
-                    let boardBackgroundImage = (body.match(urlRegex) || [])[1]
-                    let colorRegex = /(#[0-9a-f]{6}|rgba?\((\s*[\d\.]+\s*,?){3,4}\))/i
-                    let boardBackgroundColor = (body.match(colorRegex) || [])[0]
+                    let boardBackgroundImage = (body.match(urlRegex) || [])[2]
+                    let colorRegex = /background(-color)?:[^;]*(#[0-9a-f]{6}|rgba?\((\s*[\d\.]+\s*,?){3,4}\))/i
+                    let boardBackgroundColor = (body.match(colorRegex) || [])[2]
+                    let borderColorRegex = /border(-color)?:[^;]*(#[0-9a-f]{6}|rgba?\((\s*[\d\.]+\s*,?){3,4}\))/i
+                    let borderColor = (body.match(borderColorRegex) || [])[2]
 
                     return [
-                        boardBackgroundColor && [
+                        (boardBackgroundColor || borderColor) && [
                             `.shudan-goban {`,
-                            `  --shudan-board-background-color: ${boardBackgroundColor};`,
+                            boardBackgroundColor && `    --shudan-board-background-color: ${boardBackgroundColor};`,
+                            borderColor && `    --shudan-board-border-color: ${borderColor}`,
                             '}'
-                        ].join('\n'),
+                        ].filter(x => !!x).join('\n'),
                         '',
                         boardBackgroundImage && [
                             '.shudan-goban-image {',
-                            `  background-image: ${boardBackgroundImage}`,
+                            `    background-image: ${boardBackgroundImage}`,
                             '}'
                         ].join('\n'),
                         '',
